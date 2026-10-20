@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convertisseur de Texte Outline 𝔸𝔹ℂ</title>
+    <title>Convertisseur de Texte Outline 𝔸𝔹ℂ – Polices stylées à copier-coller</title>
+    <meta name="description" content="Convertissez votre texte en lettres Outline 𝔸𝔹ℂ (double-barré) et en 20 autres styles Unicode : gras, italique, script, gothique, bulles… Copiez-collez dans Instagram, TikTok, Discord.">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="canonical" href="https://esaricam902-prog.github.io/outline-fonts/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="OutlineText – Convertisseur de texte 𝔸𝔹ℂ">
+    <meta property="og:description" content="Transformez votre texte en caractères Unicode stylés et copiez-le en un clic.">
+    <meta property="og:url" content="https://esaricam902-prog.github.io/outline-fonts/">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%239333ea'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='white' font-family='serif'%3E%F0%9D%94%B8%3C/text%3E%3C/svg%3E">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -22,12 +31,18 @@
         }
     </script>
     <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+        }
+        /* Les résultats utilisent une pile de polices couvrant bien les symboles mathématiques Unicode */
+        .styled-text {
+            font-family: 'Segoe UI Symbol', 'Cambria Math', 'STIX Two Math', 'Noto Sans Math', 'Noto Sans Symbols 2', 'Inter', sans-serif;
         }
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -42,6 +57,12 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #475569;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
         }
     </style>
 </head>
@@ -60,78 +81,132 @@
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
                     <span class="w-1.5 h-1.5 mr-1.5 bg-purple-400 rounded-full animate-pulse"></span>
                     Temps réel
                 </span>
+                <a href="#styles" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition-colors">
+                    <i class="fa-solid fa-layer-group"></i> <span id="styleCountBadge">Styles</span>
+                </a>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8 md:py-12 flex flex-col space-y-6">
-        
+
         <!-- Introduction card / Description -->
         <div class="bg-cardBg/60 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl backdrop-blur-sm">
             <h2 class="text-xl font-semibold mb-2 text-slate-100 flex items-center gap-2">
-                <i class="fa-solid fa-wand-magic-sparkles text-accent"></i> 
+                <i class="fa-solid fa-wand-magic-sparkles text-accent"></i>
                 Transformez votre texte instantanément
             </h2>
             <p class="text-slate-400 text-sm leading-relaxed">
-                Tapez ou collez votre texte ci-dessous pour le convertir automatiquement en caractères Unicode "Outline" (ou double-cercle / mathématiques majuscules et minuscules). Parfait pour vos bios Instagram, TikTok, pseudos de jeux ou publications stylées !
+                Tapez ou collez votre texte ci-dessous pour le convertir automatiquement en caractères Unicode "Outline" (double-barré 𝔸𝔹ℂ), ainsi que dans de nombreux autres styles. Parfait pour vos bios Instagram, TikTok, pseudos de jeux ou publications stylées !
             </p>
         </div>
 
         <!-- Input Section -->
         <div class="bg-cardBg border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl space-y-3">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between gap-2">
                 <label for="inputText" class="text-sm font-medium text-slate-300 flex items-center gap-2">
                     <i class="fa-regular fa-keyboard text-slate-400"></i> Texte original
                 </label>
-                <button id="clearBtn" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1 bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg">
-                    <i class="fa-solid fa-rotate-left"></i> Effacer
-                </button>
+                <div class="flex items-center gap-2">
+                    <button id="shareBtn" type="button" title="Copier un lien de partage" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1 bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                        <i class="fa-solid fa-link"></i> <span class="hidden sm:inline">Partager</span>
+                    </button>
+                    <button id="clearBtn" type="button" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1 bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                        <i class="fa-solid fa-rotate-left"></i> Effacer
+                    </button>
+                </div>
             </div>
-            <textarea id="inputText" rows="4" placeholder="Tapez votre texte ici... (ex: Bonjour tout le monde 123)" class="w-full bg-slate-900 border border-slate-700/60 rounded-xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none text-base shadow-inner"></textarea>
-            <div class="flex items-center justify-between text-xs text-slate-400">
-                <span id="charCount">0 caractères</span>
-                <span class="text-slate-500">Conversion automatique en arrière-plan</span>
+            <textarea id="inputText" rows="4" placeholder="Tapez votre texte ici... (ex: Bonjour tout le monde 123)" class="w-full bg-slate-900 border border-slate-700/60 rounded-xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-y text-base shadow-inner"></textarea>
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+                <span id="charCount">0 caractère</span>
+                <label class="inline-flex items-center gap-2 cursor-pointer select-none" title="Les lettres accentuées (é, à, ç…) n'existent pas dans ces polices : on utilise la lettre de base pour garder un style homogène.">
+                    <input id="stripAccents" type="checkbox" checked class="w-4 h-4 rounded border-slate-600 bg-slate-800 accent-violet-500">
+                    Convertir les accents (é → 𝕖)
+                </label>
             </div>
         </div>
 
         <!-- Output Section -->
         <div class="bg-cardBg border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl space-y-3 relative">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between gap-2">
                 <label for="outputText" class="text-sm font-medium text-slate-300 flex items-center gap-2">
                     <i class="fa-solid fa-font text-accent"></i> Texte Outline (Style 𝔸𝔹ℂ)
                 </label>
-                <button id="copyBtn" class="bg-accent hover:bg-accentHover text-white text-xs font-medium px-4 py-2 rounded-xl transition-all shadow-lg shadow-accent/20 flex items-center gap-2 active:scale-95 disabled:opacity-50">
+                <button id="copyBtn" type="button" class="bg-accent hover:bg-accentHover text-white text-xs font-medium px-4 py-2 rounded-xl transition-all shadow-lg shadow-accent/20 flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
                     <i class="fa-regular fa-copy"></i>
                     <span id="copyBtnText">Copier le texte</span>
                 </button>
             </div>
-            <div class="relative">
-                <textarea id="outputText" readonly rows="4" placeholder="Le résultat apparaîtra ici..." class="w-full bg-slate-900/80 border border-slate-700/60 rounded-xl p-4 text-slate-100 placeholder-slate-600 focus:outline-none transition-all resize-none text-base shadow-inner font-mono"></textarea>
-            </div>
+            <textarea id="outputText" readonly rows="4" placeholder="Le résultat apparaîtra ici..." class="styled-text w-full bg-slate-900/80 border border-slate-700/60 rounded-xl p-4 text-slate-100 placeholder-slate-600 focus:outline-none transition-all resize-y text-lg shadow-inner"></textarea>
+            <p class="text-xs text-slate-500"><kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400">Ctrl</kbd> + <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400">Entrée</kbd> pour copier rapidement</p>
         </div>
 
         <!-- Quick Samples / Presets -->
         <div class="bg-cardBg/40 border border-slate-800 rounded-2xl p-5 md:p-6 space-y-3">
             <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Exemples rapides à tester</h3>
             <div class="flex flex-wrap gap-2">
-                <button class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">Hello World</button>
-                <button class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">Mathématiques</button>
-                <button class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</button>
-                <button class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">abcdefghijklmnopqrstuvwxyz</button>
-                <button class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">1234567890</button>
+                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">Hello World</button>
+                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">Mathématiques</button>
+                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</button>
+                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">abcdefghijklmnopqrstuvwxyz</button>
+                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">1234567890</button>
             </div>
         </div>
+
+        <!-- All styles -->
+        <section id="styles" class="scroll-mt-24 space-y-3">
+            <div class="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-accent"></i> Tous les styles
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Cliquez sur un style pour le copier.</p>
+                </div>
+                <div class="relative w-full sm:w-56">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input id="styleFilter" type="search" placeholder="Filtrer les styles…" aria-label="Filtrer les styles" class="w-full bg-slate-900 border border-slate-700/60 rounded-lg pl-8 pr-3 py-1.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent">
+                </div>
+            </div>
+            <div id="stylesGrid" class="grid gap-3 sm:grid-cols-2"></div>
+            <p id="noStyle" class="hidden text-sm text-slate-500 text-center py-6">Aucun style ne correspond à votre recherche.</p>
+        </section>
+
+        <!-- FAQ -->
+        <section class="bg-cardBg/40 border border-slate-800 rounded-2xl p-5 md:p-6 space-y-3">
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Questions fréquentes</h2>
+            <details class="group border-b border-slate-800 pb-3">
+                <summary class="cursor-pointer text-sm text-slate-200 font-medium list-none flex justify-between items-center">
+                    Est-ce une vraie police ?
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-500 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <p class="text-sm text-slate-400 mt-2 leading-relaxed">Non : ce sont des caractères Unicode (principalement le bloc « Symboles alphanumériques mathématiques »). C'est pour ça qu'ils restent stylés quand vous les collez ailleurs, sans rien installer.</p>
+            </details>
+            <details class="group border-b border-slate-800 pb-3">
+                <summary class="cursor-pointer text-sm text-slate-200 font-medium list-none flex justify-between items-center">
+                    Pourquoi certains caractères ne changent pas ?
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-500 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <p class="text-sm text-slate-400 mt-2 leading-relaxed">Unicode ne fournit ces styles que pour les lettres A–Z, a–z et souvent les chiffres. La ponctuation et les emojis sont conservés tels quels. Les lettres accentuées sont remplacées par leur lettre de base si l'option est cochée.</p>
+            </details>
+            <details class="group">
+                <summary class="cursor-pointer text-sm text-slate-200 font-medium list-none flex justify-between items-center">
+                    Y a-t-il des limites ?
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-500 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <p class="text-sm text-slate-400 mt-2 leading-relaxed">Les lecteurs d'écran lisent mal ces caractères et les moteurs de recherche ne les indexent pas comme du texte normal. Utilisez-les pour décorer, pas pour des informations importantes. Certains vieux appareils peuvent afficher des carrés vides.</p>
+            </details>
+        </section>
 
     </main>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 bg-slate-800 border border-slate-700 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
-        <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+    <div id="toast" role="status" aria-live="polite" class="fixed bottom-6 right-6 left-6 sm:left-auto transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 z-50 bg-slate-800 border border-slate-700 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <div class="w-6 h-6 shrink-0 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
             <i class="fa-solid fa-check text-xs"></i>
         </div>
         <span class="text-sm font-medium" id="toastMessage">Copié dans le presse-papier !</span>
@@ -144,122 +219,278 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // Tables de correspondance Unicode pour le style Outline / Double-struck (Blackboard Bold)
-        const upperMap = {
-            'A': '𝔸', 'B': '𝔹', 'C': 'ℂ', 'D': '𝔻', 'E': '𝔼', 'F': '𝔽', 'G': '𝔾', 'H': 'ℍ', 
-            'I': '𝕀', 'J': '𝕁', 'K': '𝕂', 'L': '𝕃', 'M': '𝕄', 'N': 'ℕ', 'O': '𝕆', 'P': 'ℙ', 
-            'Q': 'ℚ', 'R': 'ℝ', 'S': '𝕊', 'T': '𝕋', 'U': '𝕌', 'V': '𝕍', 'W': '𝕎', 'X': '𝕏', 
-            'Y': '𝕐', 'Z': 'ℤ'
-        };
+        // ---------- Construction des tables de correspondance ----------
+        const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const LOWER = 'abcdefghijklmnopqrstuvwxyz';
+        const DIGITS = '0123456789';
 
-        const lowerMap = {
-            'a': '𝕒', 'b': '𝕓', 'c': '𝕔', 'd': '𝕕', 'e': '𝕖', 'f': '𝕗', 'g': '𝕘', 'h': '𝕙', 
-            'i': '𝕚', 'j': '𝕛', 'k': '𝕜', 'l': '𝕝', 'm': '𝕞', 'n': '𝕟', 'o': '𝕠', 'p': '𝕡', 
-            'q': '𝕢', 'r': '𝕣', 's': '𝕤', 't': '𝕥', 'u': '𝕦', 'v': '𝕧', 'w': '𝕨', 'x': '𝕩', 
-            'y': '𝕪', 'z': '𝕫'
-        };
-
-        const digitMap = {
-            '0': '𝟘', '1': '𝟙', '2': '𝟚', '3': '𝟛', '4': '𝟜', '5': '𝟝', '6': '𝟞', '7': '𝟟', '8': '𝟠', '9': '𝟡'
-        };
-
-        // Fonction de conversion
-        function convertToOutline(text) {
-            let result = '';
-            for (let i = 0; i < text.length; i++) {
-                const char = text[i];
-                if (upperMap[char]) {
-                    result += upperMap[char];
-                } else if (lowerMap[char]) {
-                    result += lowerMap[char];
-                } else if (digitMap[char]) {
-                    result += digitMap[char];
-                } else {
-                    result += char; // Conserve les autres caractères (espaces, ponctuation, accents) tels quels
-                }
-            }
-            return result;
+        // Génère une table à partir des points de code de départ (blocs Unicode contigus),
+        // avec des exceptions pour les lettres déjà encodées ailleurs (ex : ℂ, ℝ, ℎ).
+        function buildMap({ upper, lower, digits, exceptions = {} }) {
+            const map = {};
+            if (upper != null) [...UPPER].forEach((c, i) => map[c] = String.fromCodePoint(upper + i));
+            if (lower != null) [...LOWER].forEach((c, i) => map[c] = String.fromCodePoint(lower + i));
+            if (digits != null) [...DIGITS].forEach((c, i) => map[c] = String.fromCodePoint(digits + i));
+            return Object.assign(map, exceptions);
         }
 
+        // Table à partir de deux chaînes de même longueur (en points de code)
+        function zipMap(from, to) {
+            const a = [...from], b = [...to], map = {};
+            a.forEach((c, i) => map[c] = b[i]);
+            return map;
+        }
+
+        // Le style Outline / Double-struck (Blackboard Bold) est le style principal du site
+        const outlineMap = buildMap({
+            upper: 0x1D538, lower: 0x1D552, digits: 0x1D7D8,
+            exceptions: { C: 'ℂ', H: 'ℍ', N: 'ℕ', P: 'ℙ', Q: 'ℚ', R: 'ℝ', Z: 'ℤ' }
+        });
+
+        const circledDigits = { '0': '⓪', ...zipMap('123456789', '①②③④⑤⑥⑦⑧⑨') };
+        const upperAsLower = (map) => { [...LOWER].forEach(c => map[c] = map[c.toUpperCase()]); return map; };
+
+        const STYLES = [
+            { name: 'Outline (double-barré)', map: outlineMap },
+            { name: 'Gras', map: buildMap({ upper: 0x1D400, lower: 0x1D41A, digits: 0x1D7CE }) },
+            { name: 'Italique', map: buildMap({ upper: 0x1D434, lower: 0x1D44E, exceptions: { h: 'ℎ' } }) },
+            { name: 'Gras italique', map: buildMap({ upper: 0x1D468, lower: 0x1D482 }) },
+            { name: 'Script (cursive)', map: buildMap({
+                upper: 0x1D49C, lower: 0x1D4B6,
+                exceptions: { B: 'ℬ', E: 'ℰ', F: 'ℱ', H: 'ℋ', I: 'ℐ', L: 'ℒ', M: 'ℳ', R: 'ℛ', e: 'ℯ', g: 'ℊ', o: 'ℴ' }
+            }) },
+            { name: 'Script gras', map: buildMap({ upper: 0x1D4D0, lower: 0x1D4EA }) },
+            { name: 'Gothique (Fraktur)', map: buildMap({
+                upper: 0x1D504, lower: 0x1D51E,
+                exceptions: { C: 'ℭ', H: 'ℌ', I: 'ℑ', R: 'ℜ', Z: 'ℨ' }
+            }) },
+            { name: 'Gothique gras', map: buildMap({ upper: 0x1D56C, lower: 0x1D586 }) },
+            { name: 'Sans empattement', map: buildMap({ upper: 0x1D5A0, lower: 0x1D5BA, digits: 0x1D7E2 }) },
+            { name: 'Sans empattement gras', map: buildMap({ upper: 0x1D5D4, lower: 0x1D5EE, digits: 0x1D7EC }) },
+            { name: 'Sans empattement italique', map: buildMap({ upper: 0x1D608, lower: 0x1D622 }) },
+            { name: 'Machine à écrire', map: buildMap({ upper: 0x1D670, lower: 0x1D68A, digits: 0x1D7F6 }) },
+            { name: 'Bulles', map: { ...buildMap({ upper: 0x24B6, lower: 0x24D0 }), ...circledDigits } },
+            { name: 'Bulles pleines', map: { ...upperAsLower(buildMap({ upper: 0x1F150 })), ...zipMap('0123456789', '⓿❶❷❸❹❺❻❼❽❾') } },
+            { name: 'Carrés', map: upperAsLower(buildMap({ upper: 0x1F130 })) },
+            { name: 'Carrés pleins', map: upperAsLower(buildMap({ upper: 0x1F170 })) },
+            { name: 'Pleine chasse', map: { ...buildMap({ upper: 0xFF21, lower: 0xFF41, digits: 0xFF10 }), ' ': '　' } },
+            { name: 'Petites capitales', map: zipMap(LOWER, 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ') },
+            { name: 'Exposant', map: zipMap(LOWER + 'ABDEGHIJKLMNOPRTUVW' + DIGITS, 'ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖ𐞥ʳˢᵗᵘᵛʷˣʸᶻᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁⱽᵂ⁰¹²³⁴⁵⁶⁷⁸⁹') },
+            { name: 'Barré', combining: '̶' },
+            { name: 'Souligné', combining: '̲' },
+            { name: 'À l\'envers', transform: upsideDown },
+        ];
+
+        const flipMap = zipMap(
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?\'"()[]{}<>_&',
+            'ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀ꓭƆꓷƎℲ⅁HIſꓘ˥WNOԀῸꓤS⊥∩ΛMX⅄Z0ƖᄅƐㄣϛ9ㄥ86˙\'¡¿,„)(][}{><‾⅋'
+        );
+        function upsideDown(text) {
+            return [...text].reverse().map(c => flipMap[c] ?? c).join('');
+        }
+
+        // Supprime les diacritiques (é → e, ç → c) pour que les lettres accentuées soient stylées aussi
+        function removeAccents(text) {
+            return text.normalize('NFD').replace(/[̀-ͯ]/g, '')
+                .replace(/œ/g, 'oe').replace(/Œ/g, 'OE').replace(/æ/g, 'ae').replace(/Æ/g, 'AE').replace(/ß/g, 'ss');
+        }
+
+        function applyStyle(style, text) {
+            if (style.transform) return style.transform(text);
+            if (style.combining) return [...text].map(c => /\s/.test(c) ? c : c + style.combining).join('');
+            return [...text].map(c => style.map[c] ?? c).join('');
+        }
+
+        // Conservée pour compatibilité : conversion vers le style Outline principal
+        function convertToOutline(text) {
+            return applyStyle(STYLES[0], text);
+        }
+
+        // ---------- Éléments du DOM ----------
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
         const charCount = document.getElementById('charCount');
         const clearBtn = document.getElementById('clearBtn');
+        const shareBtn = document.getElementById('shareBtn');
         const copyBtn = document.getElementById('copyBtn');
         const copyBtnText = document.getElementById('copyBtnText');
+        const stripAccents = document.getElementById('stripAccents');
+        const styleFilter = document.getElementById('styleFilter');
+        const stylesGrid = document.getElementById('stylesGrid');
+        const noStyle = document.getElementById('noStyle');
         const toast = document.getElementById('toast');
         const presetBtns = document.querySelectorAll('.preset-btn');
 
-        // Événement de saisie en temps réel
-        inputText.addEventListener('input', () => {
-            const text = inputText.value;
+        const STORAGE_KEY = 'outline-fonts:text';
+        const storage = {
+            get(key) { try { return localStorage.getItem(key); } catch { return null; } },
+            set(key, value) { try { localStorage.setItem(key, value); } catch { /* stockage indisponible */ } },
+        };
+
+        document.getElementById('styleCountBadge').textContent = `${STYLES.length} styles`;
+
+        // ---------- Grille des styles ----------
+        const styleCards = STYLES.map((style) => {
+            const card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'style-card group text-left bg-cardBg border border-slate-800 hover:border-accent/60 rounded-xl p-4 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent active:scale-[0.99]';
+            card.innerHTML = `
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                    <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400"></span>
+                    <span class="copy-hint text-[11px] text-slate-500 group-hover:text-accent transition-colors flex items-center gap-1">
+                        <i class="fa-regular fa-copy"></i> <span>Copier</span>
+                    </span>
+                </div>
+                <div class="styled-text text-lg text-slate-100 break-words min-h-[1.75rem]"></div>`;
+            card.querySelector('span').textContent = style.name;
+            const preview = card.lastElementChild;
+            card.addEventListener('click', () => {
+                if (!preview.textContent) return;
+                copyText(preview.textContent, `Style « ${style.name} » copié !`);
+                const hint = card.querySelector('.copy-hint span');
+                hint.textContent = 'Copié !';
+                setTimeout(() => hint.textContent = 'Copier', 1500);
+            });
+            stylesGrid.appendChild(card);
+            return { style, card, preview };
+        });
+
+        // ---------- Mise à jour ----------
+        function update() {
+            const raw = inputText.value;
+            const text = stripAccents.checked ? removeAccents(raw) : raw;
             outputText.value = convertToOutline(text);
-            charCount.textContent = `${text.length} caractère${text.length > 1 ? 's' : ''}`;
+            copyBtn.disabled = !raw;
+
+            const count = [...raw].length;
+            charCount.textContent = `${count} caractère${count > 1 ? 's' : ''}`;
+
+            const sample = text || 'Bonjour 123';
+            styleCards.forEach(({ style, preview }) => {
+                preview.textContent = applyStyle(style, sample);
+                preview.classList.toggle('opacity-50', !text);
+            });
+            storage.set(STORAGE_KEY, raw);
+        }
+
+        inputText.addEventListener('input', update);
+        stripAccents.addEventListener('change', update);
+
+        // Filtre des styles
+        styleFilter.addEventListener('input', () => {
+            const q = removeAccents(styleFilter.value.trim().toLowerCase());
+            let visible = 0;
+            styleCards.forEach(({ style, card }) => {
+                const match = removeAccents(style.name.toLowerCase()).includes(q);
+                card.classList.toggle('hidden', !match);
+                if (match) visible++;
+            });
+            noStyle.classList.toggle('hidden', visible > 0);
         });
 
         // Bouton effacer
         clearBtn.addEventListener('click', () => {
             inputText.value = '';
-            outputText.value = '';
-            charCount.textContent = '0 caractères';
+            update();
             inputText.focus();
         });
 
-        // Bouton de copie rapide avec méthode de compatibilité iFrame (document.execCommand)
-        copyBtn.addEventListener('click', () => {
+        // ---------- Copie ----------
+        async function copyText(text, message = 'Copié dans le presse-papier !') {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    legacyCopy(text);
+                }
+                showToast(message);
+                return true;
+            } catch {
+                try {
+                    legacyCopy(text);
+                    showToast(message);
+                    return true;
+                } catch {
+                    showToast('Impossible de copier automatiquement');
+                    return false;
+                }
+            }
+        }
+
+        // Méthode de repli (iFrame, navigateurs anciens)
+        function legacyCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand('copy');
+            ta.remove();
+            if (!ok) throw new Error('execCommand a échoué');
+        }
+
+        let copyResetTimer;
+        async function copyMain() {
             const textToCopy = outputText.value;
             if (!textToCopy) return;
+            if (!(await copyText(textToCopy))) return;
+            // Feedback visuel du bouton
+            copyBtn.classList.remove('bg-accent', 'hover:bg-accentHover');
+            copyBtn.classList.add('bg-emerald-600');
+            copyBtnText.textContent = 'Copié !';
+            clearTimeout(copyResetTimer);
+            copyResetTimer = setTimeout(() => {
+                copyBtn.classList.remove('bg-emerald-600');
+                copyBtn.classList.add('bg-accent', 'hover:bg-accentHover');
+                copyBtnText.textContent = 'Copier le texte';
+            }, 2000);
+        }
 
-            // Sélection et copie sécurisée
-            outputText.select();
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast("Copié dans le presse-papier !");
-                    // Feedback visuel du bouton
-                    copyBtn.classList.remove('bg-accent', 'hover:bg-accentHover');
-                    copyBtn.classList.add('bg-emerald-600');
-                    copyBtnText.textContent = "Copié !";
-                    setTimeout(() => {
-                        copyBtn.classList.remove('bg-emerald-600');
-                        copyBtn.classList.add('bg-accent', 'hover:bg-accentHover');
-                        copyBtnText.textContent = "Copier le texte";
-                    }, 2000);
-                } else {
-                    showToast("Erreur lors de la copie");
-                }
-            } catch (err) {
-                showToast("Impossible de copier automatiquement");
+        copyBtn.addEventListener('click', copyMain);
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                copyMain();
             }
+        });
+
+        // Lien de partage contenant le texte
+        shareBtn.addEventListener('click', () => {
+            const url = new URL(location.href);
+            url.hash = '';
+            url.search = '';
+            if (inputText.value) url.searchParams.set('t', inputText.value);
+            copyText(url.toString(), 'Lien de partage copié !');
         });
 
         // Gestion des boutons de pré-remplissage
         presetBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 inputText.value = btn.textContent;
-                // Déclencher l'événement input manuellement
-                inputText.dispatchEvent(new Event('input'));
+                update();
             });
         });
 
         // Fonction d'affichage du toast de notification
+        let toastTimer;
         function showToast(message) {
-            const toastMessage = document.getElementById('toastMessage');
-            toastMessage.textContent = message;
+            document.getElementById('toastMessage').textContent = message;
             toast.classList.remove('translate-y-20', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
                 toast.classList.add('translate-y-20', 'opacity-0');
             }, 2500);
         }
 
-        // Valeur initiale par défaut pour illustrer directement
-        window.addEventListener('DOMContentLoaded', () => {
-            inputText.value = "Bonjour tout le monde ! 123";
-            inputText.dispatchEvent(new Event('input'));
-        });
+        // Valeur initiale : lien partagé > dernier texte saisi > exemple par défaut
+        const shared = new URLSearchParams(location.search).get('t');
+        const saved = storage.get(STORAGE_KEY);
+        inputText.value = shared ?? saved ?? 'Bonjour tout le monde ! 123';
+        update();
     </script>
 </body>
 </html>
