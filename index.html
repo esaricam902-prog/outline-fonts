@@ -1,223 +1,721 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convertisseur de Texte Outline 𝔸𝔹ℂ – Polices stylées à copier-coller</title>
     <meta name="description" content="Convertissez votre texte en lettres Outline 𝔸𝔹ℂ (double-barré) et en 20 autres styles Unicode : gras, italique, script, gothique, bulles… Copiez-collez dans Instagram, TikTok, Discord.">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#07060f">
     <link rel="canonical" href="https://esaricam902-prog.github.io/outline-fonts/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="OutlineText – Convertisseur de texte 𝔸𝔹ℂ">
     <meta property="og:description" content="Transformez votre texte en caractères Unicode stylés et copiez-le en un clic.">
     <meta property="og:url" content="https://esaricam902-prog.github.io/outline-fonts/">
     <meta name="twitter:card" content="summary">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%239333ea'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='white' font-family='serif'%3E%F0%9D%94%B8%3C/text%3E%3C/svg%3E">
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#0f172a',
-                        cardBg: '#1e293b',
-                        accent: '#8b5cf6',
-                        accentHover: '#7c3aed'
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts Inter -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23a78bfa'/%3E%3Cstop offset='1' stop-color='%23f472b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='white' font-family='serif'%3E%F0%9D%94%B8%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #07060f;
+            --surface: rgba(255, 255, 255, 0.045);
+            --surface-2: rgba(255, 255, 255, 0.07);
+            --border: rgba(255, 255, 255, 0.09);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --text: #f4f2ff;
+            --muted: #a49fc0;
+            --faint: #6f6a8c;
+            --violet: #a78bfa;
+            --pink: #f472b6;
+            --cyan: #67e8f9;
+            --green: #34d399;
+            --grad: linear-gradient(120deg, var(--violet), var(--pink) 55%, #fb923c);
+            --radius: 22px;
+            --shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        /* Les résultats utilisent une pile de polices couvrant bien les symboles mathématiques Unicode */
+
+        ::selection { background: var(--pink); color: #fff; }
+
+        /* Fond : halos colorés flous + grain discret */
+        .aurora {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .aurora span {
+            position: absolute;
+            width: 46vmax;
+            height: 46vmax;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.32;
+            animation: float 22s ease-in-out infinite alternate;
+        }
+        .aurora span:nth-child(1) { background: #7c3aed; top: -18vmax; left: -12vmax; }
+        .aurora span:nth-child(2) { background: #db2777; top: 10vmax; right: -20vmax; animation-delay: -7s; opacity: 0.22; }
+        .aurora span:nth-child(3) { background: #0891b2; bottom: -26vmax; left: 15vmax; animation-delay: -14s; opacity: 0.18; }
+        .aurora::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 22px 22px;
+            mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+        }
+        @keyframes float {
+            to { transform: translate(6vmax, 4vmax) scale(1.12); }
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ---------- En-tête ---------- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            background: rgba(7, 6, 15, 0.6);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+        }
+        .brand-logo {
+            display: grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+            background: var(--grad);
+            font-family: 'Cambria Math', 'STIX Two Math', serif;
+            font-size: 20px;
+            color: #fff;
+            box-shadow: 0 6px 20px -6px rgba(244, 114, 182, 0.7);
+        }
+        .nav-links { display: flex; gap: 6px; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 999px;
+            transition: color .2s, background .2s;
+        }
+        .nav-links a:hover { color: var(--text); background: var(--surface-2); }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            text-align: center;
+            padding: 72px 0 40px;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border-strong);
+            background: var(--surface);
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .eyebrow b {
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: var(--grad);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .03em;
+        }
+        .hero h1 {
+            margin: 22px auto 16px;
+            max-width: 780px;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: clamp(36px, 6.4vw, 68px);
+            line-height: 1.04;
+            letter-spacing: -0.035em;
+            font-weight: 700;
+        }
+        .hero h1 .grad {
+            background: var(--grad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Cambria Math', 'STIX Two Math', 'Noto Sans Math', serif;
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        .hero p {
+            margin: 0 auto;
+            max-width: 560px;
+            color: var(--muted);
+            font-size: clamp(15px, 2vw, 18px);
+        }
+
+        /* ---------- Cartes génériques ---------- */
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* ---------- Éditeur ---------- */
+        .editor {
+            padding: 6px;
+            /* liseré dégradé */
+            background:
+                linear-gradient(var(--bg), var(--bg)) padding-box,
+                linear-gradient(140deg, rgba(167, 139, 250, .55), rgba(244, 114, 182, .25) 40%, rgba(255, 255, 255, .06)) border-box;
+            border: 1px solid transparent;
+        }
+        .editor-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-radius: calc(var(--radius) - 6px);
+            background: rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+        }
+        .pane { padding: 22px 24px 18px; display: flex; flex-direction: column; min-width: 0; }
+        .pane + .pane { border-left: 1px solid var(--border); background: rgba(167, 139, 250, 0.045); }
+        .pane-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            min-height: 34px;
+        }
+        .label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            color: var(--faint);
+        }
+        .actions { display: flex; gap: 6px; }
+
+        textarea {
+            width: 100%;
+            flex: 1;
+            min-height: 150px;
+            resize: vertical;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--text);
+            font: inherit;
+            font-size: 22px;
+            line-height: 1.45;
+            padding: 0;
+        }
+        textarea::placeholder { color: var(--faint); }
+        #outputText { cursor: text; }
+
         .styled-text {
-            font-family: 'Segoe UI Symbol', 'Cambria Math', 'STIX Two Math', 'Noto Sans Math', 'Noto Sans Symbols 2', 'Inter', sans-serif;
+            font-family: 'Cambria Math', 'STIX Two Math', 'Noto Sans Math', 'Segoe UI Symbol', 'Noto Sans Symbols 2', 'Inter', sans-serif;
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        .pane-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--faint);
         }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
+
+        /* ---------- Boutons ---------- */
+        button { font: inherit; cursor: pointer; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 7px 12px;
+            border-radius: 11px;
+            transition: background .2s, color .2s, border-color .2s, transform .1s;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
+        .btn:hover { color: var(--text); border-color: var(--border-strong); background: rgba(255, 255, 255, .1); }
+        .btn:active { transform: scale(.96); }
+        .btn svg { width: 15px; height: 15px; flex: none; }
+
+        .btn-primary {
+            border: 0;
+            color: #fff;
+            font-weight: 600;
+            padding: 9px 16px;
+            background: var(--grad);
+            background-size: 160% 100%;
+            box-shadow: 0 8px 24px -8px rgba(244, 114, 182, .8);
+            transition: background-position .4s, transform .1s, box-shadow .2s, opacity .2s;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
+        .btn-primary:hover { color: #fff; background: var(--grad); background-size: 160% 100%; background-position: 100% 0; box-shadow: 0 10px 30px -8px rgba(244, 114, 182, 1); }
+        .btn-primary:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+        .btn-primary.copied { background: var(--green); box-shadow: 0 8px 24px -8px rgba(52, 211, 153, .8); }
+
+        :focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+
+        /* Interrupteur accents */
+        .switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
         }
+        .switch input { position: absolute; opacity: 0; pointer-events: none; }
+        .switch .track {
+            position: relative;
+            width: 36px;
+            height: 20px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .14);
+            transition: background .2s;
+            flex: none;
+        }
+        .switch .track::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform .2s;
+        }
+        .switch input:checked + .track { background: var(--violet); }
+        .switch input:checked + .track::after { transform: translateX(16px); }
+        .switch input:focus-visible + .track { outline: 2px solid var(--violet); outline-offset: 2px; }
+
+        kbd {
+            font-family: inherit;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid var(--border-strong);
+            background: var(--surface-2);
+            color: var(--muted);
+        }
+
+        /* ---------- Exemples ---------- */
+        .presets {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 22px 0 0;
+        }
+        .presets .label { margin-right: 4px; }
+        .chip {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--muted);
+            font-size: 13px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            transition: all .2s;
+        }
+        .chip:hover { color: var(--text); border-color: rgba(167, 139, 250, .6); background: rgba(167, 139, 250, .12); transform: translateY(-1px); }
+
+        /* ---------- Section styles ---------- */
+        section { scroll-margin-top: 84px; }
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 88px 0 22px;
+        }
+        .section-head h2 {
+            margin: 0 0 4px;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: clamp(26px, 3.6vw, 34px);
+            letter-spacing: -0.03em;
+        }
+        .section-head p { margin: 0; color: var(--muted); font-size: 15px; }
+
+        .search {
+            position: relative;
+            width: 100%;
+            max-width: 280px;
+        }
+        .search svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            transform: translateY(-50%);
+            color: var(--faint);
+        }
+        .search input {
+            width: 100%;
+            padding: 11px 14px 11px 40px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font: inherit;
+            font-size: 14px;
+            outline: 0;
+            transition: border-color .2s, background .2s;
+        }
+        .search input::placeholder { color: var(--faint); }
+        .search input:focus { border-color: var(--violet); background: var(--surface-2); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 14px;
+        }
+        .style-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+            padding: 18px 20px 20px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            transition: transform .2s, border-color .2s, background .2s, box-shadow .2s;
+            animation: rise .5s both;
+        }
+        .style-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(167, 139, 250, .45);
+            background: rgba(167, 139, 250, .07);
+            box-shadow: 0 18px 40px -18px rgba(167, 139, 250, .55);
+        }
+        .style-card:active { transform: translateY(-1px) scale(.99); }
+        .style-card.is-copied { border-color: rgba(52, 211, 153, .6); background: rgba(52, 211, 153, .08); }
+        .style-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .style-name { font-size: 13px; font-weight: 500; color: var(--muted); }
+        .style-num { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; margin-right: 6px; }
+        .copy-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--faint);
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: transparent;
+            transition: all .2s;
+        }
+        .copy-hint svg { width: 13px; height: 13px; }
+        .style-card:hover .copy-hint { color: #fff; background: var(--violet); }
+        .style-card.is-copied .copy-hint { color: #04291d; background: var(--green); }
+        .style-preview {
+            font-size: 24px;
+            line-height: 1.35;
+            overflow-wrap: anywhere;
+            min-height: 32px;
+            transition: opacity .2s;
+        }
+        .style-preview.placeholder { opacity: .45; }
+        .empty { text-align: center; color: var(--faint); padding: 40px 0; }
+        @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+        /* ---------- FAQ ---------- */
+        .faq { display: grid; gap: 10px; }
+        .faq details {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 0 20px;
+            transition: border-color .2s, background .2s;
+        }
+        .faq details[open] { border-color: var(--border-strong); background: var(--surface-2); }
+        .faq summary {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 0;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .faq summary::-webkit-details-marker { display: none; }
+        .faq summary::after {
+            content: '+';
+            display: grid;
+            place-items: center;
+            flex: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            color: var(--muted);
+            font-size: 18px;
+            font-weight: 400;
+            transition: transform .25s;
+        }
+        .faq details[open] summary::after { transform: rotate(45deg); }
+        .faq details p { margin: -4px 0 18px; color: var(--muted); font-size: 15px; }
+
+        /* ---------- Pied de page ---------- */
+        footer {
+            margin-top: 96px;
+            padding: 32px 0 40px;
+            border-top: 1px solid var(--border);
+            color: var(--faint);
+            font-size: 13px;
+        }
+        footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        footer .styled-text { color: var(--muted); }
+
+        /* ---------- Toast ---------- */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: calc(100% - 32px);
+            padding: 12px 18px 12px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--border-strong);
+            background: rgba(22, 20, 38, .92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, .8);
+            font-size: 14px;
+            font-weight: 500;
+            transform: translate(-50%, 140%);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform .35s cubic-bezier(.2, .9, .3, 1.3), opacity .25s;
+        }
+        .toast.show { transform: translate(-50%, 0); opacity: 1; }
+        .toast i {
+            display: grid;
+            place-items: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #04291d;
+            flex: none;
+        }
+        .toast i svg { width: 14px; height: 14px; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 760px) {
+            .hero { padding: 44px 0 28px; }
+            .nav-links { display: none; }
+            .editor-inner { grid-template-columns: 1fr; }
+            .pane + .pane { border-left: 0; border-top: 1px solid var(--border); }
+            .pane { padding: 18px 18px 16px; }
+            textarea { min-height: 110px; font-size: 20px; }
+            .section-head { margin-top: 64px; }
+            .search { max-width: none; }
+            .grid { grid-template-columns: 1fr; }
+            .hide-sm { display: none; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation: none !important;
-                transition: none !important;
-            }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            html { scroll-behavior: auto; }
         }
     </style>
 </head>
-<body class="bg-darkBg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-accent selection:text-white">
+<body>
+    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
 
-    <!-- Header / Navbar -->
-    <header class="w-full border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                    <span class="text-xl font-bold text-white">𝔸</span>
-                </div>
-                <div>
-                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">OutlineText</h1>
-                    <p class="text-xs text-slate-400">Convertisseur de police mathématique</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-2">
-                <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                    <span class="w-1.5 h-1.5 mr-1.5 bg-purple-400 rounded-full animate-pulse"></span>
-                    Temps réel
-                </span>
-                <a href="#styles" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition-colors">
-                    <i class="fa-solid fa-layer-group"></i> <span id="styleCountBadge">Styles</span>
-                </a>
-            </div>
+    <!-- Icônes SVG réutilisables -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+        <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+    </svg>
+
+    <header>
+        <div class="wrap nav">
+            <a class="brand" href="#">
+                <span class="brand-logo">𝔸</span>
+                OutlineText
+            </a>
+            <nav class="nav-links">
+                <a href="#styles">Styles</a>
+                <a href="#faq">FAQ</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8 md:py-12 flex flex-col space-y-6">
+    <main class="wrap">
+        <section class="hero">
+            <span class="eyebrow"><b>GRATUIT</b> <span id="styleCountBadge">22 styles</span> · copie en un clic</span>
+            <h1>Donnez du style à votre texte <span class="grad">𝕆𝕦𝕥𝕝𝕚𝕟𝕖</span></h1>
+            <p>Tapez votre texte, il se transforme instantanément en lettres Unicode à coller sur Instagram, TikTok, Discord ou dans vos pseudos.</p>
+        </section>
 
-        <!-- Introduction card / Description -->
-        <div class="bg-cardBg/60 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl backdrop-blur-sm">
-            <h2 class="text-xl font-semibold mb-2 text-slate-100 flex items-center gap-2">
-                <i class="fa-solid fa-wand-magic-sparkles text-accent"></i>
-                Transformez votre texte instantanément
-            </h2>
-            <p class="text-slate-400 text-sm leading-relaxed">
-                Tapez ou collez votre texte ci-dessous pour le convertir automatiquement en caractères Unicode "Outline" (double-barré 𝔸𝔹ℂ), ainsi que dans de nombreux autres styles. Parfait pour vos bios Instagram, TikTok, pseudos de jeux ou publications stylées !
-            </p>
-        </div>
-
-        <!-- Input Section -->
-        <div class="bg-cardBg border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl space-y-3">
-            <div class="flex items-center justify-between gap-2">
-                <label for="inputText" class="text-sm font-medium text-slate-300 flex items-center gap-2">
-                    <i class="fa-regular fa-keyboard text-slate-400"></i> Texte original
-                </label>
-                <div class="flex items-center gap-2">
-                    <button id="shareBtn" type="button" title="Copier un lien de partage" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1 bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
-                        <i class="fa-solid fa-link"></i> <span class="hidden sm:inline">Partager</span>
-                    </button>
-                    <button id="clearBtn" type="button" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1 bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
-                        <i class="fa-solid fa-rotate-left"></i> Effacer
-                    </button>
+        <!-- Éditeur : saisie + résultat Outline -->
+        <div class="card editor">
+            <div class="editor-inner">
+                <div class="pane">
+                    <div class="pane-head">
+                        <label for="inputText" class="label">Votre texte</label>
+                        <div class="actions">
+                            <button id="shareBtn" type="button" class="btn" title="Copier un lien de partage">
+                                <svg><use href="#i-link"/></svg><span class="hide-sm">Partager</span>
+                            </button>
+                            <button id="clearBtn" type="button" class="btn" title="Effacer le texte">
+                                <svg><use href="#i-x"/></svg><span class="hide-sm">Effacer</span>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="inputText" rows="4" placeholder="Écrivez quelque chose…" spellcheck="false"></textarea>
+                    <div class="pane-foot">
+                        <span id="charCount">0 caractère</span>
+                        <label class="switch" title="Les lettres accentuées (é, à, ç…) n'existent pas dans ces polices : on utilise la lettre de base pour garder un style homogène.">
+                            <input id="stripAccents" type="checkbox" checked>
+                            <span class="track"></span>
+                            Convertir les accents
+                        </label>
+                    </div>
+                </div>
+                <div class="pane">
+                    <div class="pane-head">
+                        <label for="outputText" class="label">Résultat 𝔸𝔹ℂ</label>
+                        <button id="copyBtn" type="button" class="btn btn-primary">
+                            <svg><use href="#i-copy"/></svg><span id="copyBtnText">Copier</span>
+                        </button>
+                    </div>
+                    <textarea id="outputText" class="styled-text" readonly rows="4" placeholder="Le résultat apparaîtra ici…"></textarea>
+                    <div class="pane-foot">
+                        <span class="hide-sm"><kbd>Ctrl</kbd> + <kbd>Entrée</kbd> pour copier</span>
+                    </div>
                 </div>
             </div>
-            <textarea id="inputText" rows="4" placeholder="Tapez votre texte ici... (ex: Bonjour tout le monde 123)" class="w-full bg-slate-900 border border-slate-700/60 rounded-xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-y text-base shadow-inner"></textarea>
-            <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
-                <span id="charCount">0 caractère</span>
-                <label class="inline-flex items-center gap-2 cursor-pointer select-none" title="Les lettres accentuées (é, à, ç…) n'existent pas dans ces polices : on utilise la lettre de base pour garder un style homogène.">
-                    <input id="stripAccents" type="checkbox" checked class="w-4 h-4 rounded border-slate-600 bg-slate-800 accent-violet-500">
-                    Convertir les accents (é → 𝕖)
-                </label>
-            </div>
         </div>
 
-        <!-- Output Section -->
-        <div class="bg-cardBg border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl space-y-3 relative">
-            <div class="flex items-center justify-between gap-2">
-                <label for="outputText" class="text-sm font-medium text-slate-300 flex items-center gap-2">
-                    <i class="fa-solid fa-font text-accent"></i> Texte Outline (Style 𝔸𝔹ℂ)
-                </label>
-                <button id="copyBtn" type="button" class="bg-accent hover:bg-accentHover text-white text-xs font-medium px-4 py-2 rounded-xl transition-all shadow-lg shadow-accent/20 flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
-                    <i class="fa-regular fa-copy"></i>
-                    <span id="copyBtnText">Copier le texte</span>
-                </button>
-            </div>
-            <textarea id="outputText" readonly rows="4" placeholder="Le résultat apparaîtra ici..." class="styled-text w-full bg-slate-900/80 border border-slate-700/60 rounded-xl p-4 text-slate-100 placeholder-slate-600 focus:outline-none transition-all resize-y text-lg shadow-inner"></textarea>
-            <p class="text-xs text-slate-500"><kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400">Ctrl</kbd> + <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400">Entrée</kbd> pour copier rapidement</p>
+        <div class="presets">
+            <span class="label">Essayer :</span>
+            <button type="button" class="chip preset-btn">Hello World</button>
+            <button type="button" class="chip preset-btn">Mathématiques</button>
+            <button type="button" class="chip preset-btn">ABCDEFGHIJKLMNOPQRSTUVWXYZ</button>
+            <button type="button" class="chip preset-btn">abcdefghijklmnopqrstuvwxyz</button>
+            <button type="button" class="chip preset-btn">1234567890</button>
         </div>
 
-        <!-- Quick Samples / Presets -->
-        <div class="bg-cardBg/40 border border-slate-800 rounded-2xl p-5 md:p-6 space-y-3">
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Exemples rapides à tester</h3>
-            <div class="flex flex-wrap gap-2">
-                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">Hello World</button>
-                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">Mathématiques</button>
-                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ</button>
-                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">abcdefghijklmnopqrstuvwxyz</button>
-                <button type="button" class="preset-btn text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/50 transition-all">1234567890</button>
-            </div>
-        </div>
-
-        <!-- All styles -->
-        <section id="styles" class="scroll-mt-24 space-y-3">
-            <div class="flex flex-wrap items-end justify-between gap-3">
+        <!-- Tous les styles -->
+        <section id="styles">
+            <div class="section-head">
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
-                        <i class="fa-solid fa-layer-group text-accent"></i> Tous les styles
-                    </h2>
-                    <p class="text-xs text-slate-400 mt-1">Cliquez sur un style pour le copier.</p>
+                    <h2>Tous les styles</h2>
+                    <p>Cliquez sur une carte pour copier le texte.</p>
                 </div>
-                <div class="relative w-full sm:w-56">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                    <input id="styleFilter" type="search" placeholder="Filtrer les styles…" aria-label="Filtrer les styles" class="w-full bg-slate-900 border border-slate-700/60 rounded-lg pl-8 pr-3 py-1.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent">
+                <div class="search">
+                    <svg><use href="#i-search"/></svg>
+                    <input id="styleFilter" type="search" placeholder="Rechercher un style…" aria-label="Rechercher un style">
                 </div>
             </div>
-            <div id="stylesGrid" class="grid gap-3 sm:grid-cols-2"></div>
-            <p id="noStyle" class="hidden text-sm text-slate-500 text-center py-6">Aucun style ne correspond à votre recherche.</p>
+            <div id="stylesGrid" class="grid"></div>
+            <p id="noStyle" class="empty" hidden>Aucun style ne correspond à votre recherche.</p>
         </section>
 
         <!-- FAQ -->
-        <section class="bg-cardBg/40 border border-slate-800 rounded-2xl p-5 md:p-6 space-y-3">
-            <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Questions fréquentes</h2>
-            <details class="group border-b border-slate-800 pb-3">
-                <summary class="cursor-pointer text-sm text-slate-200 font-medium list-none flex justify-between items-center">
-                    Est-ce une vraie police ?
-                    <i class="fa-solid fa-chevron-down text-xs text-slate-500 group-open:rotate-180 transition-transform"></i>
-                </summary>
-                <p class="text-sm text-slate-400 mt-2 leading-relaxed">Non : ce sont des caractères Unicode (principalement le bloc « Symboles alphanumériques mathématiques »). C'est pour ça qu'ils restent stylés quand vous les collez ailleurs, sans rien installer.</p>
-            </details>
-            <details class="group border-b border-slate-800 pb-3">
-                <summary class="cursor-pointer text-sm text-slate-200 font-medium list-none flex justify-between items-center">
-                    Pourquoi certains caractères ne changent pas ?
-                    <i class="fa-solid fa-chevron-down text-xs text-slate-500 group-open:rotate-180 transition-transform"></i>
-                </summary>
-                <p class="text-sm text-slate-400 mt-2 leading-relaxed">Unicode ne fournit ces styles que pour les lettres A–Z, a–z et souvent les chiffres. La ponctuation et les emojis sont conservés tels quels. Les lettres accentuées sont remplacées par leur lettre de base si l'option est cochée.</p>
-            </details>
-            <details class="group">
-                <summary class="cursor-pointer text-sm text-slate-200 font-medium list-none flex justify-between items-center">
-                    Y a-t-il des limites ?
-                    <i class="fa-solid fa-chevron-down text-xs text-slate-500 group-open:rotate-180 transition-transform"></i>
-                </summary>
-                <p class="text-sm text-slate-400 mt-2 leading-relaxed">Les lecteurs d'écran lisent mal ces caractères et les moteurs de recherche ne les indexent pas comme du texte normal. Utilisez-les pour décorer, pas pour des informations importantes. Certains vieux appareils peuvent afficher des carrés vides.</p>
-            </details>
+        <section id="faq">
+            <div class="section-head">
+                <div>
+                    <h2>Questions fréquentes</h2>
+                </div>
+            </div>
+            <div class="faq">
+                <details>
+                    <summary>Est-ce une vraie police ?</summary>
+                    <p>Non : ce sont des caractères Unicode (principalement le bloc « Symboles alphanumériques mathématiques »). C'est pour ça qu'ils restent stylés quand vous les collez ailleurs, sans rien installer.</p>
+                </details>
+                <details>
+                    <summary>Pourquoi certains caractères ne changent pas ?</summary>
+                    <p>Unicode ne fournit ces styles que pour les lettres A–Z, a–z et souvent les chiffres. La ponctuation et les emojis sont conservés tels quels. Les lettres accentuées sont remplacées par leur lettre de base si l'option est activée.</p>
+                </details>
+                <details>
+                    <summary>Y a-t-il des limites ?</summary>
+                    <p>Les lecteurs d'écran lisent mal ces caractères et les moteurs de recherche ne les indexent pas comme du texte normal. Utilisez-les pour décorer, pas pour des informations importantes. Certains vieux appareils peuvent afficher des carrés vides.</p>
+                </details>
+            </div>
         </section>
-
     </main>
 
-    <!-- Toast Notification -->
-    <div id="toast" role="status" aria-live="polite" class="fixed bottom-6 right-6 left-6 sm:left-auto transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 z-50 bg-slate-800 border border-slate-700 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
-        <div class="w-6 h-6 shrink-0 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-            <i class="fa-solid fa-check text-xs"></i>
+    <footer>
+        <div class="wrap">
+            <span class="styled-text">𝕆𝕦𝕥𝕝𝕚𝕟𝕖𝕋𝕖𝕩𝕥</span>
+            <span>Convertisseur de caractères Unicode · 100 % dans votre navigateur</span>
         </div>
-        <span class="text-sm font-medium" id="toastMessage">Copié dans le presse-papier !</span>
-    </div>
-
-    <!-- Footer -->
-    <footer class="w-full border-t border-slate-800 bg-slate-900/30 py-6 text-center text-xs text-slate-500">
-        <p>Convertisseur de caractères Outline Unicode • Conçu avec soin & Tailwind CSS</p>
     </footer>
 
-    <!-- JavaScript Logic -->
+    <div id="toast" class="toast" role="status" aria-live="polite">
+        <i><svg><use href="#i-check"/></svg></i>
+        <span id="toastMessage">Copié dans le presse-papier !</span>
+    </div>
+
     <script>
         // ---------- Construction des tables de correspondance ----------
         const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -301,7 +799,7 @@
             return [...text].map(c => style.map[c] ?? c).join('');
         }
 
-        // Conservée pour compatibilité : conversion vers le style Outline principal
+        // Conversion vers le style Outline principal
         function convertToOutline(text) {
             return applyStyle(STYLES[0], text);
         }
@@ -330,26 +828,32 @@
         document.getElementById('styleCountBadge').textContent = `${STYLES.length} styles`;
 
         // ---------- Grille des styles ----------
-        const styleCards = STYLES.map((style) => {
+        const styleCards = STYLES.map((style, index) => {
             const card = document.createElement('button');
             card.type = 'button';
-            card.className = 'style-card group text-left bg-cardBg border border-slate-800 hover:border-accent/60 rounded-xl p-4 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent active:scale-[0.99]';
+            card.className = 'style-card';
+            card.style.animationDelay = `${index * 25}ms`;
             card.innerHTML = `
-                <div class="flex items-center justify-between gap-2 mb-1.5">
-                    <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400"></span>
-                    <span class="copy-hint text-[11px] text-slate-500 group-hover:text-accent transition-colors flex items-center gap-1">
-                        <i class="fa-regular fa-copy"></i> <span>Copier</span>
-                    </span>
+                <div class="style-top">
+                    <span class="style-name"><span class="style-num"></span><span class="style-label"></span></span>
+                    <span class="copy-hint"><svg><use href="#i-copy"/></svg><span>Copier</span></span>
                 </div>
-                <div class="styled-text text-lg text-slate-100 break-words min-h-[1.75rem]"></div>`;
-            card.querySelector('span').textContent = style.name;
-            const preview = card.lastElementChild;
-            card.addEventListener('click', () => {
+                <div class="style-preview styled-text"></div>`;
+            card.querySelector('.style-num').textContent = String(index + 1).padStart(2, '0');
+            card.querySelector('.style-label').textContent = style.name;
+            const preview = card.querySelector('.style-preview');
+            const hint = card.querySelector('.copy-hint span');
+            let resetTimer;
+            card.addEventListener('click', async () => {
                 if (!preview.textContent) return;
-                copyText(preview.textContent, `Style « ${style.name} » copié !`);
-                const hint = card.querySelector('.copy-hint span');
+                if (!(await copyText(preview.textContent, `Style « ${style.name} » copié !`))) return;
+                card.classList.add('is-copied');
                 hint.textContent = 'Copié !';
-                setTimeout(() => hint.textContent = 'Copier', 1500);
+                clearTimeout(resetTimer);
+                resetTimer = setTimeout(() => {
+                    card.classList.remove('is-copied');
+                    hint.textContent = 'Copier';
+                }, 1500);
             });
             stylesGrid.appendChild(card);
             return { style, card, preview };
@@ -368,7 +872,7 @@
             const sample = text || 'Bonjour 123';
             styleCards.forEach(({ style, preview }) => {
                 preview.textContent = applyStyle(style, sample);
-                preview.classList.toggle('opacity-50', !text);
+                preview.classList.toggle('placeholder', !text);
             });
             storage.set(STORAGE_KEY, raw);
         }
@@ -382,10 +886,10 @@
             let visible = 0;
             styleCards.forEach(({ style, card }) => {
                 const match = removeAccents(style.name.toLowerCase()).includes(q);
-                card.classList.toggle('hidden', !match);
+                card.hidden = !match;
                 if (match) visible++;
             });
-            noStyle.classList.toggle('hidden', visible > 0);
+            noStyle.hidden = visible > 0;
         });
 
         // Bouton effacer
@@ -436,15 +940,12 @@
             const textToCopy = outputText.value;
             if (!textToCopy) return;
             if (!(await copyText(textToCopy))) return;
-            // Feedback visuel du bouton
-            copyBtn.classList.remove('bg-accent', 'hover:bg-accentHover');
-            copyBtn.classList.add('bg-emerald-600');
+            copyBtn.classList.add('copied');
             copyBtnText.textContent = 'Copié !';
             clearTimeout(copyResetTimer);
             copyResetTimer = setTimeout(() => {
-                copyBtn.classList.remove('bg-emerald-600');
-                copyBtn.classList.add('bg-accent', 'hover:bg-accentHover');
-                copyBtnText.textContent = 'Copier le texte';
+                copyBtn.classList.remove('copied');
+                copyBtnText.textContent = 'Copier';
             }, 2000);
         }
 
@@ -465,7 +966,7 @@
             copyText(url.toString(), 'Lien de partage copié !');
         });
 
-        // Gestion des boutons de pré-remplissage
+        // Boutons d'exemples
         presetBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 inputText.value = btn.textContent;
@@ -473,17 +974,13 @@
             });
         });
 
-        // Fonction d'affichage du toast de notification
+        // Notification
         let toastTimer;
         function showToast(message) {
             document.getElementById('toastMessage').textContent = message;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
+            toast.classList.add('show');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 2500);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
         // Valeur initiale : lien partagé > dernier texte saisi > exemple par défaut
